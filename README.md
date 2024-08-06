@@ -35,3 +35,7 @@ CREATE TABLE club_member_info_cleaned (
 INSERT INTO club_member_info_cleaned
 SELECT * FROM club_member_info
 ```
+# Inconsistent letter case and Leading and trailing whitespaces
+```
+SELECT LTRIM(UPPER(full_name)) FROM club_member_info_cleaned;
+```
