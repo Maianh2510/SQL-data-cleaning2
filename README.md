@@ -39,3 +39,12 @@ SELECT * FROM club_member_info
 ```
 SELECT LTRIM(UPPER(full_name)) FROM club_member_info_cleaned;
 ```
+# Age out of realistic range
+```
+SELECT
+CASE 
+	WHEN age < 109 THEN age
+	ELSE (SELECT CEILING(AVG(age)) FROM club_member_info_cleaned)
+END as age
+FROM club_member_info_cleaned;
+```
