@@ -37,14 +37,17 @@ SELECT * FROM club_member_info
 ```
 # Inconsistent letter case and Leading and trailing whitespaces
 ```
-SELECT LTRIM(UPPER(full_name)) FROM club_member_info_cleaned;
+UPDATE club_member_info_cleaned
+SET full_name = LTRIM(full_name)
+WHERE full_name NOTNULL;
+
+UPDATE club_member_info_cleaned
+SET full_name = UPPER(SUBSTRING(full_name,1,1))||LOWER(SUBSTRING(full_name,2,20))
+WHERE full_name NOTNULL;
 ```
 # Age out of realistic range
 ```
-SELECT
-CASE 
-	WHEN age < 109 THEN age
-	ELSE (SELECT CEILING(AVG(age)) FROM club_member_info_cleaned)
-END as age
-FROM club_member_info_cleaned;
+UPDATE club_member_info_cleaned
+SET age = (SELECT CEILING(AVG(age)) FROM club_member_info_cleaned )
+WHERE age > 80;
 ```
